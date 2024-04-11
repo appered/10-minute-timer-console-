@@ -1,0 +1,36 @@
+function createTimerElement() {
+  const timerElement = document.createElement('div');
+  timerElement.id = 'timer';
+  timerElement.style.position = 'fixed';
+  timerElement.style.top = '50%'; // Center vertically
+  timerElement.style.left = '50%'; // Center horizontally
+  timerElement.style.transform = 'translate(-50%, -50%)';
+  timerElement.style.fontSize = '48px';
+  timerElement.style.fontWeight = 'bold';
+  timerElement.style.color = '#ffffff';
+  timerElement.textContent = "10:00";
+  document.body.appendChild(timerElement);
+}
+function updateTimer() {
+  const timerElement = document.getElementById('timer');
+  if (timerElement) {
+    let remainingSeconds = 600;
+    setInterval(() => {
+      const minutes = Math.floor(remainingSeconds / 60);
+      const seconds = remainingSeconds % 60;
+      timerElement.textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
+      remainingSeconds--;
+      if (remainingSeconds < 0) {
+        clearInterval();
+        timerElement.textContent = "Time's up!";
+      }
+    }, 1000);
+  } else {
+    console.error("Timer element not found");
+  }
+}
+function onPageLoad() {
+  createTimerElement();
+  updateTimer();
+}
+window.onload = onPageLoad;
